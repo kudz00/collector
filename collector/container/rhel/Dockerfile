@@ -37,7 +37,6 @@ ARG collector_version=xxx
 ARG module_version=xxx
 ARG USE_VALGRIND=false
 ARG ADDRESS_SANITIZER=false
-ARG HOST_ROOT=/host
 
 LABEL name="collector" \
       vendor="StackRox" \
@@ -49,8 +48,7 @@ LABEL name="collector" \
 
 ENV COLLECTOR_VERSION=${collector_version} \
     MODULE_VERSION=${module_version} \
-    COLLECTOR_HOST_ROOT=${HOST_ROOT} \
-    SCAP_HOST_ROOT_ENV_VAR_NAME=${HOST_ROOT}
+    SCAP_HOST_ROOT_ENV_VAR_NAME=/host
 
 WORKDIR /
 
