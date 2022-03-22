@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eoux pipefail
+set -eou pipefail
 
 echo "Waiting for all pods to be running"
 

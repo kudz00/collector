@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eoux pipefail
+set -eou pipefail
 
 name=$1
 artifacts_dir=${2:-/tmp/artifacts}
