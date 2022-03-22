@@ -19,7 +19,6 @@ knb_base_dir="$2"
 [[ -n "$artifacts_dir" && -n "$knb_base_dir" ]] \
     || die "Usage: $0 <artifacts-dir> <knb-base-dir>"
 
-
 log "teardown knb-monitor"
 kubectl delete ds/knb-monitor
 

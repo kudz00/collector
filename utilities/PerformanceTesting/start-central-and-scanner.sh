@@ -42,7 +42,5 @@ fi
 
 echo "${settings[@]}"
 
-
-
 helm install -n stackrox stackrox-central-services --create-namespace rhacs/central-services \
     "${settings[@]}"

@@ -12,5 +12,5 @@ rm perf-bundle.yml || true
 
 url="$(oc -n stackrox get routes central -o json | jq -r '.spec.host')"
 roxctl -e https://"$url":443 \
-   -p "$central_password" central init-bundles generate perf-test \
-   --output perf-bundle.yml
+    -p "$central_password" central init-bundles generate perf-test \
+    --output perf-bundle.yml

@@ -21,13 +21,12 @@ knb_base_dir="$3"
     || die "Usage: $0 <artifacts-dir> <test-name>"
 
 if [[ -z "$knb_base_dir" ]]; then
-  knb_base_dir="$(mktemp -d)"
+    knb_base_dir="$(mktemp -d)"
 fi
 
 if [[ ! -d "$knb_base_dir" ]]; then
     mkdir "$knb_base_dir"
 fi
-
 
 knb_base_url="https://github.com/cilium/kubenetbench"
 knb_url="${knb_base_url}/archive/refs/heads/master.zip"
