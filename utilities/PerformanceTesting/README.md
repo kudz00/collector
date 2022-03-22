@@ -11,7 +11,7 @@ If you want to run with an applied load you will also need kubenetbench
 
 # Purpose
 
-Spins up an openshift-4 cluster and repeatedly runs StackRox with different versions of Collector and 
+Spins up an openshift-4 cluster and repeatedly runs StackRox with different versions of Collector and
 reports metrics such as cpu and memory usage for each run.
 
 # Running
@@ -32,7 +32,7 @@ cluster_name: Name of the openshift-4 cluster
 
 test_dir: The test results will be written to test_dir directory. The path of the result files will be
 	test_dir/result_<nick_name>_<run>.txt. Where <nick_name> is from the third column of the
-	<collector_version_file>. More on that below.	 
+	<collector_version_file>. More on that below.
 
 load-test-name: If network load is applied this will be the name for the Kubnetbench load test. The Kubenetbench will create a directory with
 	results regarding the network load and other files.

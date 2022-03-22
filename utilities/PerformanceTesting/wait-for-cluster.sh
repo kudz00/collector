@@ -3,7 +3,7 @@ set -eou pipefail
 
 name=$1
 
-echo "Waiting for infra cluster to be ready" 
+echo "Waiting for infra cluster to be ready"
 
 while true
 do

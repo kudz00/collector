@@ -39,7 +39,7 @@ fi
 if [[ -n ${SCANNER_DBIMAGE_TAG:-} ]]; then
     settings+=(--set scanner.dbImage.tag="$SCANNER_DBIMAGE_TAG")
 fi
-    
+
 echo "${settings[@]}"
 
 

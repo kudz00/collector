@@ -27,7 +27,7 @@ fi
 if [[ ! -d "$knb_base_dir" ]]; then
     mkdir "$knb_base_dir"
 fi
-    
+
 
 knb_base_url="https://github.com/cilium/kubenetbench"
 knb_url="${knb_base_url}/archive/refs/heads/master.zip"

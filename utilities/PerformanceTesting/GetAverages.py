@@ -62,7 +62,7 @@ def calcAverage(file_prefix, num_files, output_file):
     lines = getLines(files)
 
     out = open(output_file, "w")
-    
+
     for i in range(len(lines[0])):
         if isQueryLine(lines[0][i]):
             left = getLeft(lines[0][i])

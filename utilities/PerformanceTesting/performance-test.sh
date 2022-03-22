@@ -32,7 +32,7 @@ do
 		collector_image_tag="$(echo "$line" | awk '{print $2}')"
 		nick_name="$(echo "$line" | awk '{print $3}')"
 		printf 'yes\n'  | $teardown_script
-		"$DIR"/start-stack-rox.sh "$cluster_name" "$artifacts_dir" "$collector_image_registry" "$collector_image_tag" 
+		"$DIR"/start-stack-rox.sh "$cluster_name" "$artifacts_dir" "$collector_image_registry" "$collector_image_tag"
 		sleep 600
 		if ((num_streams > 0)); then
                     "$DIR/generate-load.sh" "$artifacts_dir" "$load_test_name" "$num_streams" "$knb_base_dir"

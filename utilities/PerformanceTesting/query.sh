@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail 
+set -eo pipefail
 
 do_prometheus_query() {
   query_expression="$1"
@@ -21,7 +21,7 @@ do_prometheus_query_and_get_value() {
   query_result=$(do_prometheus_query "$query_expression")
   get_value_from_query_result "$query_result"
 }
-  
+
 get_reports_for_collector_timers() {
   echo ""
   echo "#################"
@@ -46,7 +46,7 @@ get_reports_for_collector_timers() {
     echo "Maximum time taken by $timer in any pod (microseconds): $max_time"
     echo ""
   done
-  
+
   echo "Total time taken by collector timers in worst case (Sum of max times in microseconds): $total_max_time"
   echo "Total average time taken by collector timers (microseconds): $total_avg_time"
   echo ""
