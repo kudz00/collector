@@ -879,7 +879,7 @@ jobs:
                   if [ -f /tmp/core.out ]; then
                     sudo chmod 755 /tmp/core.out
                   fi
-                  exit "${exit_code}" 
+                  exit "${exit_code}"
           fi
           [[ -z "$CIRCLE_BRANCH" ]] || gsutil cp ~/workspace/go/src/github.com/stackrox/collector/integration-tests/integration-test-report.xml "gs://stackrox-ci-results/circleci/collector/${CIRCLE_BRANCH}/$(date +%Y-%m-%d)-${CIRCLE_BUILD_NUM}/"
 

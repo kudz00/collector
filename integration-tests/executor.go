@@ -276,4 +276,3 @@ func (e *sshCommandBuilder) RemoteCopyCommand(remoteSrc string, localDst string)
 		e.user + "@" + e.address + ":" + remoteSrc, localDst}
 	return exec.Command("scp", args...)
 }
-

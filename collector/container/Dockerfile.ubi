@@ -6,7 +6,6 @@ ARG REDHAT_USERNAME
 ARG REDHAT_PASSWORD
 ARG USE_VALGRIND=false
 ARG ADDRESS_SANITIZER=false
-ARG ENABLE_CORE_DUMP=true
 RUN rm -rf /etc/rhsm-host && \
     subscription-manager register --username "${REDHAT_USERNAME}" --password "${REDHAT_PASSWORD}" && \
     subscription-manager attach && \
@@ -73,7 +72,6 @@ ARG USE_VALGRIND=false
 ARG ADDRESS_SANITIZER=false
 
 ENV COLLECTOR_HOST_ROOT=/host
-ENV ENABLE_CORE_DUMPS=false
 
 RUN rm -rf /etc/rhsm-host
 COPY --from=builder /etc/pki/entitlement /etc/pki/entitlement
