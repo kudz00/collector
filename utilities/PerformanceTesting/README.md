@@ -31,7 +31,7 @@ To run StackRox on an openshift-4 cluster execute the following
 cluster_name: Name of the openshift-4 cluster
 
 test_dir: The test results will be written to test_dir directory. The path of the result files will be
-	test_dir/result_<nick_name>_<run>.txt. Where <nick_name> is from the third column of the
+	test_dir/results_<nick_name>_<run>.txt. Where <nick_name> is from the third column of the
 	<collector_version_file>. More on that below.
 
 load-test-name: If network load is applied this will be the name for the Kubnetbench load test. The Kubenetbench will create a directory with
@@ -82,9 +82,9 @@ The purpose of these environment variables is to control the versions of the oth
 # Output
 
 The test results will be written to test_dir directory. The path of the result files will be
-test_dir/result_<nick_name>_<run>.txt. Where <nick_name> is from the third column of the
+test_dir/results_<nick_name>_<run>.txt. Where <nick_name> is from the third column of the
 <collector_version_file>. The results are the output of the query.sh script which is called
-from the performance-test.sh script.
+from the performance-test.sh script. 
 
 Within each result file the results will be given in the form
 
@@ -97,6 +97,9 @@ Average of net_conn_deltas over pods: 273.5
 Related metrics are grouped together within borders formed from "#"
 
 After one border the title for the group of metrics is given.
+
+Averaged results over multiple iterations will be saved to <test_dir>/Average_results_<nick_name>.txt
+for each collector version.
 
 
 # Getting Averages Over Iterations

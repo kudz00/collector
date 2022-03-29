@@ -49,5 +49,5 @@ fi
 
 while read -r line; do
     nick_name="$(echo "$line" | awk '{print $3}')"
-    python3 "$DIR"/GetAverages.py --filePrefix "${test_dir}/result_${nick_name}_" --numFiles "$nrepeat" --outputFile "${test_dir}/Average_result_${nick_name}.txt"
+    python3 "$DIR"/GetAverages.py --filePrefix "${test_dir}/results_${nick_name}_" --numFiles "$nrepeat" --outputFile "${test_dir}/Average_results_${nick_name}.txt"
 done < "$collector_versions_file"
