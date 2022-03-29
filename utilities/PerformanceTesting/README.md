@@ -22,10 +22,10 @@ The first time you will want to run the following command
 helm repo add rhacs https://mirror.openshift.com/pub/rhacs/charts
 ````
 
-To run Rox on an openshift-4 cluster execute the following
+To run StackRox on an openshift-4 cluster execute the following
 
 ```
-./performance-test.sh <cluster_name> <test_dir> <load-test-name> <num-streams> <collector_versions_file> [teardown_script] [nrepeat] [artifacts_dir]
+./performance-test.sh <cluster_name> <test_dir> <load-test-name> <num-streams> <collector_versions_file> [teardown_script] [nrepeat] [sleep_after_stack_rox] [load_duration] [query_window] [artifacts_dir]
 ```
 
 cluster_name: Name of the openshift-4 cluster
@@ -53,6 +53,12 @@ the TEARDOWN_SCRIPT environment variable must be set
 
 nrepeat: How many times are the tests repeated. The default is 5
 
+sleep_after_start_stack_rox: The time in seconds between when StackRox is started and when the network load is applied. The default is 60.
+
+load_duration: The duration of the network load in seconds. The default is 600.
+
+query_window: The time window used by the Prometheus queries. The default is 10m.
+
 artifacts_dir: Where information about the cluster is stored. This is needed by almost all scripts in
 	this directory. If you are running multiple clusters at the same time this needs to be different
 	for each cluster. The default is /tmp/artifacts
@@ -72,3 +78,60 @@ IMAGE_MAIN_NAME
 IMAGE_MAIN_TAG
 
 The purpose of these environment variables is to control the versions of the other componenets of StackRox.
+
+# Output
+
+The test results will be written to test_dir directory. The path of the result files will be
+test_dir/result_<nick_name>_<run>.txt. Where <nick_name> is from the third column of the
+<collector_version_file>. The results are the output of the query.sh script which is called
+from the performance-test.sh script.
+
+Within each result file the results will be given in the form
+
+metric: value
+
+For example
+
+Average of net_conn_deltas over pods: 273.5
+
+Related metrics are grouped together within borders formed from "#"
+
+After one border the title for the group of metrics is given.
+
+
+# Getting Averages Over Iterations
+
+To get averaged runs from multiple iterations run
+
+```
+	python3 GetAverages.py --filePrefix <file_prefix> --numFiles <num_files> --outputFile <output_file>
+```
+
+This script looks for lines of the form
+
+metric: value
+
+where "value" is a numerical value, in files of the form <file_prefix>_[0-9]*.txt where the index is in the 
+range 0 to <num_files>-1 and files the average of the values over the files and outputs a line of the form
+
+metric: average_value 
+
+When a new metric is added there is no need to change GetAverages.py
+
+Example
+
+Say the following files were outputted by the query.sh script as a result of running performance-test.sh
+
+
+TestResults/results_0.txt
+TestResults/results_1.txt
+TestResults/results_2.txt
+TestResults/results_3.txt
+TestResults/results_4.txt
+TestResults/results_5.txt
+
+To average theses runs something like the following could be executed
+
+```
+       python3 GetAverages.py --filePrefix TestResults/results_ --numFiles 6 --outputFile TestResults/Average_results.txt
+```

@@ -1,20 +1,19 @@
-import sys
+import sys, argparse
 
 def getFilePaths(file_prefix, num_files):
-    files = [None] * num_files
+    files = []
 
     for i in range(num_files):
-        files[i] = file_prefix + str(i) + ".txt"
+        files.append(f"{file_prefix}{i}.txt")
 
     return files
 
 def getLines(files):
-    lines = [None] * len(files)
+    lines = []
 
     for i, file_path in enumerate(files):
         with open(file_path) as f:
-            lines[i] = f.readlines()
-            lines[i] = list(map(lambda line: line.strip(), lines[i]))
+            lines.append(list(map(str.strip, f.readlines())))
 
     return lines
 
@@ -72,8 +71,14 @@ def calcAverage(file_prefix, num_files, output_file):
             out.write(lines[0][i] + "\n")
 
 if __name__ == '__main__':
-    file_prefix = sys.argv[1]
-    num_files = int(sys.argv[2])
-    output_file = sys.argv[3]
+    parser = argparse.ArgumentParser(description='Arguments for GetAverages')
+    parser.add_argument('--filePrefix', type=str)
+    parser.add_argument('--numFiles', type=int)
+    parser.add_argument('--outputFile', type=str)
+    args = parser.parse_args()
+
+    file_prefix = args.filePrefix
+    num_files = args.numFiles
+    output_file = args.outputFile
 
     calcAverage(file_prefix, num_files, output_file)

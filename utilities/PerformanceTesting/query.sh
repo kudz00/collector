@@ -79,6 +79,7 @@ get_reports_for_collector_counters() {
 }
 
 get_reports_for_sensor_network_flow() {
+    query_window=${1:-10m}
     echo ""
     echo "#################"
     echo ""
@@ -101,7 +102,7 @@ get_reports_for_sensor_network_flow() {
 
     for metric in rox_sensor_network_flow_host_connections_added rox_sensor_network_flow_host_connections_removed rox_sensor_network_flow_external_flows; do
         query=$metric
-        rate_query='rate('$metric'[10m])'
+        rate_query='rate('$metric'['$query_window'])'
 
         value=$(do_prometheus_query_and_get_value "$query")
         rate_value=$(do_prometheus_query_and_get_value "$rate_query")
@@ -124,14 +125,14 @@ get_reports_for_cpu_mem_and_network_usage() {
     echo "Report for cpu and memory usage"
     echo ""
 
-    avg_cpu_query='avg by (job) (rate(container_cpu_usage_seconds_total{namespace="stackrox"}[10m]) * 100)'
-    max_cpu_query='max by (job) (rate(container_cpu_usage_seconds_total{namespace="stackrox"}[10m]) * 100)'
+    avg_cpu_query='avg by (job) (rate(container_cpu_usage_seconds_total{namespace="stackrox"}['$query_window']) * 100)'
+    max_cpu_query='max by (job) (rate(container_cpu_usage_seconds_total{namespace="stackrox"}['$query_window']) * 100)'
     avg_mem_query='avg by (job) (container_memory_usage_bytes{namespace="stackrox"})'
     max_mem_query='max by (job) (container_memory_usage_bytes{namespace="stackrox"})'
-    avg_network_receive_query='avg by (job) (rate(container_network_receive_bytes_total{namespace="stackrox"}[10m]))'
-    max_network_receive_query='max by (job) (rate(container_network_receive_bytes_total{namespace="stackrox"}[10m]))'
-    avg_network_transmit_query='avg by (job) (rate(container_network_transmit_bytes_total{namespace="stackrox"}[10m]))'
-    max_network_transmit_query='max by (job) (rate(container_network_transmit_bytes_total{namespace="stackrox"}[10m]))'
+    avg_network_receive_query='avg by (job) (rate(container_network_receive_bytes_total{namespace="stackrox"}['$query_window']))'
+    max_network_receive_query='max by (job) (rate(container_network_receive_bytes_total{namespace="stackrox"}['$query_window']))'
+    avg_network_transmit_query='avg by (job) (rate(container_network_transmit_bytes_total{namespace="stackrox"}['$query_window']))'
+    max_network_transmit_query='max by (job) (rate(container_network_transmit_bytes_total{namespace="stackrox"}['$query_window']))'
     avg_total_network_receive_query='avg by (job) (container_network_receive_bytes_total{namespace="stackrox"})'
     max_total_network_receive_query='max by (job) (container_network_receive_bytes_total{namespace="stackrox"})'
     avg_total_network_transmit_query='avg by (job) (container_network_transmit_bytes_total{namespace="stackrox"})'
@@ -175,11 +176,12 @@ get_reports_for_cpu_mem_and_network_usage() {
 }
 
 artifacts_dir=${1:-/tmp/artifacts}
+query_window=${2:-10m}
 
 export KUBECONFIG=$artifacts_dir/kubeconfig
 
-password="$(cat "$artifacts_dir"/kubeadmin-password)"
-printf '%s\n' "$password" | oc login -u kubeadmin
+
+oc login -u kubeadmin < "$artifacts_dir/kubeadmin-password"
 
 token="$(oc whoami -t)"
 url="$(oc get routes -A | grep prometheus-k8s | awk '{print $3}' | head -1)"
