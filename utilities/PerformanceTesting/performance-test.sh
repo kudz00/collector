@@ -31,8 +31,7 @@ for ((n = 0; n < nrepeat; n = n + 1)); do
         collector_image_registry="$(echo "$line" | awk '{print $1}')"
         collector_image_tag="$(echo "$line" | awk '{print $2}')"
         nick_name="$(echo "$line" | awk '{print $3}')"
-        #yes | $teardown_script
-	printf 'yes\n'  | $teardown_script
+        printf 'yes\n'  | $teardown_script
         "$DIR"/start-stack-rox.sh "$cluster_name" "$artifacts_dir" "$collector_image_registry" "$collector_image_tag"
         sleep "$sleep_after_start_stack_rox"
         if ((num_streams > 0)); then

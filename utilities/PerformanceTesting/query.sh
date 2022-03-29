@@ -79,11 +79,12 @@ get_reports_for_collector_counters() {
 }
 
 get_reports_for_sensor_network_flow() {
-    query_window=${1:-10m}
     echo ""
     echo "#################"
     echo ""
     echo "Report for sensor network flow"
+
+    local query_window=${1:-10m}
 
     for flow_type in incoming outgoing; do
         for protocol in L4_PROTOCOL_TCP L4_PROTOCOL_UDP; do
@@ -124,6 +125,8 @@ get_reports_for_cpu_mem_and_network_usage() {
     echo "#################"
     echo "Report for cpu and memory usage"
     echo ""
+
+    local query_window=${1:-10m}
 
     avg_cpu_query='avg by (job) (rate(container_cpu_usage_seconds_total{namespace="stackrox"}['$query_window']) * 100)'
     max_cpu_query='max by (job) (rate(container_cpu_usage_seconds_total{namespace="stackrox"}['$query_window']) * 100)'
@@ -180,7 +183,6 @@ query_window=${2:-10m}
 
 export KUBECONFIG=$artifacts_dir/kubeconfig
 
-
 oc login -u kubeadmin < "$artifacts_dir/kubeadmin-password"
 
 token="$(oc whoami -t)"
@@ -188,5 +190,5 @@ url="$(oc get routes -A | grep prometheus-k8s | awk '{print $3}' | head -1)"
 
 get_reports_for_collector_timers
 get_reports_for_collector_counters
-get_reports_for_sensor_network_flow
-get_reports_for_cpu_mem_and_network_usage
+get_reports_for_sensor_network_flow "$query_window"
+get_reports_for_cpu_mem_and_network_usage "$query_window"
