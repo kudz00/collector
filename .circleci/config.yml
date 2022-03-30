@@ -1657,3 +1657,4 @@ workflows:
           - collector-support
         requires:
           - upload-modules
+          - images
