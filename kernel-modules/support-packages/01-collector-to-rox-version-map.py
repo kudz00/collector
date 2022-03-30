@@ -39,7 +39,7 @@ def append_unreleased_tags(version_map, released_versions_file):
     # Create a list of tupples holding the version as ints, this makes it
     # easier to compare them.
     versions = []
-    for k in released_versions:
+    for k in version_map:
         versions.append(tag_to_version(k))
 
     max_version = max(versions)
@@ -51,7 +51,7 @@ def append_unreleased_tags(version_map, released_versions_file):
     tags_cmd.check_returncode()
 
     for tag in tags_cmd.stdout.splitlines():
-        if tag in released_versions:
+        if tag in version_map:
             continue
 
         # We only want to add tags with a version higher than the latest
