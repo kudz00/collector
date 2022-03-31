@@ -60,7 +60,7 @@ def append_unreleased_tags(version_map, released_versions_file):
         if not version or version < max_version:
             continue
 
-        version_map[tag] = ["--"]
+        version_map[tag] = ["0.0.0"]
 
 def write_versions_metadata(version_map, metadata_dir):
     collector_versions_dir = os.path.join(metadata_dir, 'collector-versions')

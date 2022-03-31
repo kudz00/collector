@@ -90,9 +90,10 @@ def load_modules_metadata(md_dir):
             continue
 
         with open(os.path.join(path, 'ROX_VERSIONS')) as f:
-            rox_versions = [ver for ver in (line.strip() for line in f) if ver]
+            rox_versions = [ver for ver in (line.strip() for line in f) if ver and ver != "0.0.0"]
 
-        result[mod_ver] = rox_versions
+        if rox_versions:
+            result[mod_ver] = rox_versions
 
     return result
 
