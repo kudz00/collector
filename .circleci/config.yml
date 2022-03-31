@@ -1122,7 +1122,7 @@ jobs:
 
       - setup_remote_docker:
           version: 20.10.11
-      - quay-login
+      - docker-login-push
       - gcloud-init
 
       - run:
